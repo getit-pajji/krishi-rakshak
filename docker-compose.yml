@@ -1,23 +1,24 @@
-version: "3.8"
-services:
-  db:
-    image: postgis/postgis
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: farmdb
-    ports:
-      - "5432:5432"
-    volumes:
-      - ./db:/docker-entrypoint-initdb.d
+// firebaseConfig.js
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth"; // optional login
+import { getStorage } from "firebase/storage"; // optional image uploads
 
-  backend:
-    build: ./backend
-    command: node server.js
-    volumes:
-      - ./backend:/app
-    ports:
-      - "4000:4000"
-    depends_on:
-      - db
+// Your config
+const firebaseConfig = {
+  apiKey: "AIza...your_key...",
+  authDomain: "krishi-rakshak-cf737.firebaseapp.com",
+  projectId: "krishi-rakshak-cf737",
+  storageBucket: "krishi-rakshak-cf737.appspot.com",
+  messagingSenderId: "150636089597",
+  appId: "1:150636089597:web:a1f49ea32fb89b5460ee94",
+  measurementId: "G-36F3C9ZSDG"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+// Export usable instances
+export const db = getFirestore(app);
+export const auth = getAuth(app);
+export const storage = getStorage(app);
